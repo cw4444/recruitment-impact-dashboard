@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recruitment Impact Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Recruitment Function Dashboard</p>
+        <h1>Measure hiring as a business system, not just an HR process.</h1>
+        <p class="hero-text">
+          A practical view of speed, quality, efficiency and business impact, expanded into the
+          next generation of recruitment measures: hiring risk, time to productivity, skills coverage
+          and strategic role success.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-action" type="button">Export Board Pack</button>
+          <button class="secondary-action" type="button">Share Hiring Review</button>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">Executive Signal</p>
+        <div class="hero-score">
+          <span class="score-value">78</span>
+          <span class="score-context">Hiring system health</span>
+        </div>
+        <p class="hero-note">
+          Momentum is strongest in acceptance rate and critical-role delivery. The biggest drag is
+          time to productivity in specialist hires.
+        </p>
+      </aside>
+    </header>
+
+    <main class="dashboard-grid">
+      <section class="card controls-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Explore The Data</p>
+            <h2>Filter the recruitment picture</h2>
+          </div>
+          <p class="section-note">Switch the lens by hiring segment, then search directly for candidates.</p>
+        </div>
+        <div class="controls-layout">
+          <div class="filter-group">
+            <label class="control-label" for="function-filter">Function</label>
+            <select id="function-filter">
+              <option value="all">All functions</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Technology">Technology</option>
+              <option value="Operations">Operations</option>
+              <option value="People">People</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="control-label" for="region-filter">Region</label>
+            <select id="region-filter">
+              <option value="all">All regions</option>
+              <option value="UK">UK</option>
+              <option value="EMEA">EMEA</option>
+              <option value="North America">North America</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label class="control-label" for="priority-filter">Priority</label>
+            <select id="priority-filter">
+              <option value="all">All priorities</option>
+              <option value="Critical">Critical</option>
+              <option value="Growth">Growth</option>
+              <option value="Steady">Steady</option>
+            </select>
+          </div>
+          <div class="filter-group search-group">
+            <label class="control-label" for="candidate-search">Candidate search</label>
+            <input id="candidate-search" type="search" placeholder="Search by candidate, role, skill or stage">
+          </div>
+        </div>
+        <div class="filter-summary" id="filter-summary"></div>
+      </section>
+
+      <section class="card spotlight">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Core Framework</p>
+            <h2>Speed, quality, efficiency and impact</h2>
+          </div>
+          <p class="section-note">Grounded in the source screenshot and translated into live dashboard blocks.</p>
+        </div>
+        <div class="metric-grid" id="core-metrics"></div>
+      </section>
+
+      <section class="card chart-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Hiring Velocity</p>
+            <h2>Time to offer vs time to start</h2>
+          </div>
+          <p class="section-note">Illustrative monthly trend</p>
+        </div>
+        <div class="trend-chart" id="trend-chart" aria-label="Hiring velocity trend chart"></div>
+      </section>
+
+      <section class="card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Strategic Metrics</p>
+            <h2>What comes next</h2>
+          </div>
+          <p class="section-note">The future-facing measures called out in the screenshot.</p>
+        </div>
+        <div class="priority-list" id="strategic-metrics"></div>
+      </section>
+
+      <section class="card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Funnel Health</p>
+            <h2>Stage effectiveness</h2>
+          </div>
+          <p class="section-note">Conversion quality across the recruitment journey.</p>
+        </div>
+        <div class="funnel-list" id="funnel-stages"></div>
+      </section>
+
+      <section class="card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Risk & Value</p>
+            <h2>Business impact checkpoints</h2>
+          </div>
+          <p class="section-note">Designed for board-level conversation, not just TA reporting.</p>
+        </div>
+        <div class="impact-grid" id="impact-metrics"></div>
+      </section>
+
+      <section class="card candidates-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Candidate View</p>
+            <h2>Searchable slate and pipeline watchlist</h2>
+          </div>
+          <p class="section-note">This gives recruiters and hiring managers a practical way into the data.</p>
+        </div>
+        <div class="candidate-list" id="candidate-list"></div>
+      </section>
+
+      <section class="card source-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Design Principles</p>
+            <h2>What this dashboard is built to measure</h2>
+          </div>
+          <p class="section-note">The underlying framework remains visible, without shipping the original screenshot in the product.</p>
+        </div>
+        <ul class="source-points">
+          <li>Shared definitions and meaningful benchmarks</li>
+          <li>Hiring risk in an era of AI and regulation</li>
+          <li>Time to productivity and value per hire</li>
+          <li>Internal mobility, leadership pipeline and skills coverage</li>
+        </ul>
+        <div class="principles-panel">
+          <p class="principles-lead">
+            The dashboard is intentionally split between operational hiring metrics and strategic workforce signals,
+            so recruitment can be discussed in terms of delivery, risk and business value.
+          </p>
+          <div class="principles-grid">
+            <article>
+              <h3>Operational clarity</h3>
+              <p>Track time to offer, time to start, funnel conversion and cost per starter with consistent definitions.</p>
+            </article>
+            <article>
+              <h3>Candidate visibility</h3>
+              <p>Use search and filtering to move from portfolio view to named candidates, stages and skills.</p>
+            </article>
+            <article>
+              <h3>Business outcomes</h3>
+              <p>Make room for quality of hire, productivity, value per hire and strategic skills coverage.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

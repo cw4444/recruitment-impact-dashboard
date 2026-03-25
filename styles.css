@@ -192,7 +192,8 @@ h2 {
 }
 
 .controls-card,
-.source-card {
+.source-card,
+.vacancies-card {
   grid-column: span 12;
 }
 
@@ -230,7 +231,8 @@ h2 {
 
 .metric-grid,
 .impact-grid,
-.candidate-list {
+.candidate-list,
+.table-wrap {
   display: grid;
   gap: 14px;
 }
@@ -511,6 +513,80 @@ input[type="search"]:focus {
   padding-left: 18px;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.vacancy-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.46);
+}
+
+.vacancy-table th,
+.vacancy-table td {
+  padding: 16px 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(30, 36, 48, 0.08);
+  vertical-align: top;
+}
+
+.vacancy-table thead th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: rgba(248, 243, 232, 0.92);
+}
+
+.vacancy-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.role-cell {
+  display: grid;
+  gap: 4px;
+}
+
+.role-title {
+  font-weight: 800;
+}
+
+.role-note,
+.table-meta {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.status-chip.on-track {
+  background: rgba(15, 118, 110, 0.12);
+  color: var(--accent);
+}
+
+.status-chip.watch {
+  background: rgba(198, 106, 61, 0.14);
+  color: var(--accent-warm);
+}
+
+.status-chip.at-risk {
+  background: rgba(159, 45, 45, 0.12);
+  color: var(--critical);
 }
 
 .principles-panel {

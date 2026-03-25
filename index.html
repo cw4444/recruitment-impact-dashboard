@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recruitment Impact Dashboard</title>
+  <meta name="description" content="Recruitment operations dashboard for hiring velocity, strategic workforce metrics, candidate search and vacancy tracking.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap" rel="stylesheet">
@@ -148,6 +150,32 @@
           <p class="section-note">This gives recruiters and hiring managers a practical way into the data.</p>
         </div>
         <div class="candidate-list" id="candidate-list"></div>
+      </section>
+
+      <section class="card vacancies-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Vacancy Operations</p>
+            <h2>Active requisitions and delivery risk</h2>
+          </div>
+          <p class="section-note">An operator-ready table for the jobs currently moving through the hiring system.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="vacancy-table">
+            <thead>
+              <tr>
+                <th scope="col">Role</th>
+                <th scope="col">Function</th>
+                <th scope="col">Region</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Open Days</th>
+                <th scope="col">Pipeline</th>
+                <th scope="col">Hiring Manager</th>
+              </tr>
+            </thead>
+            <tbody id="vacancy-table-body"></tbody>
+          </table>
+        </div>
       </section>
 
       <section class="card source-card">

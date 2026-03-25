@@ -130,6 +130,15 @@ const candidates = [
   { name: "Daniel Moore", role: "Operations Lead", function: "Operations", region: "EMEA", priority: "Steady", stage: "Offer", skills: ["Process design", "Vendor management", "Compliance"], note: "Would stabilise operational resilience and improve regional delivery." }
 ];
 
+const vacancies = [
+  { role: "Senior Account Executive", function: "Commercial", region: "UK", priority: "Critical", openDays: 19, pipeline: "Final interviews booked", manager: "Natalie Webb", status: "on-track", note: "2 strong finalists and one likely offer path." },
+  { role: "Platform Engineer", function: "Technology", region: "EMEA", priority: "Critical", openDays: 31, pipeline: "Offer out", manager: "Jonas Keller", status: "watch", note: "Candidate intent is good but notice period is long." },
+  { role: "Data Engineer", function: "Technology", region: "UK", priority: "Critical", openDays: 27, pipeline: "Technical interviews", manager: "Priya Solanki", status: "watch", note: "Strong slate forming after targeted sourcing push." },
+  { role: "Talent Partner", function: "People", region: "UK", priority: "Growth", openDays: 12, pipeline: "Shortlist ready", manager: "Emma Hughes", status: "on-track", note: "Market response is healthy and turnaround is fast." },
+  { role: "Revenue Operations Manager", function: "Commercial", region: "North America", priority: "Growth", openDays: 24, pipeline: "Assessment", manager: "Chris Monroe", status: "on-track", note: "Calibration improved after brief reset with stakeholders." },
+  { role: "Operations Lead", function: "Operations", region: "EMEA", priority: "Steady", openDays: 38, pipeline: "Offer approval", manager: "Lena Fischer", status: "at-risk", note: "Process is close, but approvals have slipped twice." }
+];
+
 const state = {
   function: "all",
   region: "all",
@@ -269,6 +278,50 @@ function renderCandidates() {
   `).join("");
 }
 
+function renderVacancies() {
+  const container = document.getElementById("vacancy-table-body");
+  const rows = vacancies.filter((vacancy) => {
+    const matchesFunction = state.function === "all" || vacancy.function === state.function;
+    const matchesRegion = state.region === "all" || vacancy.region === state.region;
+    const matchesPriority = state.priority === "all" || vacancy.priority === state.priority;
+    const query = state.search.trim().toLowerCase();
+    const matchesSearch = !query || [
+      vacancy.role,
+      vacancy.pipeline,
+      vacancy.manager,
+      vacancy.note
+    ].some((value) => value.toLowerCase().includes(query));
+
+    return matchesFunction && matchesRegion && matchesPriority && matchesSearch;
+  });
+
+  if (!rows.length) {
+    container.innerHTML = `
+      <tr>
+        <td colspan="7" class="table-meta">No vacancies match the current filters.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  container.innerHTML = rows.map((vacancy) => `
+    <tr>
+      <td>
+        <div class="role-cell">
+          <span class="role-title">${vacancy.role}</span>
+          <span class="role-note">${vacancy.note}</span>
+        </div>
+      </td>
+      <td>${vacancy.function}</td>
+      <td>${vacancy.region}</td>
+      <td><span class="pill ${vacancy.priority === "Critical" ? "high" : vacancy.priority === "Growth" ? "medium" : "good"}">${vacancy.priority}</span></td>
+      <td>${vacancy.openDays}</td>
+      <td><span class="status-chip ${vacancy.status}">${vacancy.pipeline}</span></td>
+      <td>${vacancy.manager}</td>
+    </tr>
+  `).join("");
+}
+
 function renderFilterSummary(summary) {
   const container = document.getElementById("filter-summary");
   const functionLabel = state.function === "all" ? "All functions" : state.function;
@@ -287,6 +340,7 @@ function renderDashboard() {
   renderFunnel(activeData.funnelStages);
   renderImpactMetrics(activeData.impactMetrics);
   renderCandidates();
+  renderVacancies();
   renderFilterSummary(activeData.summary);
 }
 

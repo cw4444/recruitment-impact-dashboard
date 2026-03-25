@@ -205,9 +205,9 @@ h2 {
   grid-column: span 5;
 }
 
-.dashboard-grid > .card:nth-child(4),
-.dashboard-grid > .card:nth-child(5),
-.dashboard-grid > .card:nth-child(6) {
+.strategic-card,
+.funnel-card,
+.impact-card {
   grid-column: span 4;
 }
 
@@ -415,7 +415,7 @@ h2 {
 
 .controls-layout {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -463,7 +463,14 @@ input[type="search"]:focus {
 }
 
 .candidate-list {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.candidate-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.9fr);
+  gap: 18px;
+  align-items: start;
 }
 
 .candidate-role,
@@ -481,6 +488,20 @@ input[type="search"]:focus {
 .candidate-copy {
   color: var(--muted);
   line-height: 1.5;
+}
+
+.candidate-tile {
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.candidate-tile:hover {
+  transform: translateY(-1px);
+}
+
+.candidate-tile.is-selected {
+  border-color: rgba(15, 118, 110, 0.38);
+  box-shadow: inset 0 0 0 1px rgba(15, 118, 110, 0.22);
 }
 
 .candidate-tags {
@@ -506,6 +527,141 @@ input[type="search"]:focus {
   border: 1px dashed var(--line);
   color: var(--muted);
   text-align: center;
+}
+
+.candidate-detail,
+.board-note {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.46);
+}
+
+.candidate-detail {
+  position: sticky;
+  top: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.detail-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.detail-name,
+.detail-role,
+.detail-heading {
+  margin: 0;
+}
+
+.detail-role {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.detail-name {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.detail-section {
+  display: grid;
+  gap: 8px;
+}
+
+.detail-heading {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.detail-copy,
+.detail-meta,
+.detail-list {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.detail-list {
+  padding-left: 18px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.detail-stat {
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(248, 243, 232, 0.92);
+  border: 1px solid rgba(30, 36, 48, 0.08);
+}
+
+.detail-stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.detail-stat strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1rem;
+}
+
+.board-pack-card {
+  display: none;
+  grid-column: span 12;
+}
+
+.board-pack-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 14px;
+}
+
+.board-note h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.board-note p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.board-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.board-pack-mode .board-pack-card {
+  display: block;
+}
+
+.board-pack-mode .controls-card,
+.board-pack-mode .candidates-card,
+.board-pack-mode .vacancies-card,
+.board-pack-mode .source-card {
+  display: none;
+}
+
+.board-pack-mode .hero-copy,
+.board-pack-mode .hero-panel,
+.board-pack-mode .card {
+  box-shadow: 0 10px 30px rgba(39, 43, 54, 0.08);
 }
 
 .source-points {
@@ -635,9 +791,9 @@ input[type="search"]:focus {
 
   .spotlight,
   .chart-card,
-  .dashboard-grid > .card:nth-child(3),
-  .dashboard-grid > .card:nth-child(4),
-  .dashboard-grid > .card:nth-child(5),
+  .strategic-card,
+  .funnel-card,
+  .impact-card,
   .source-card {
     grid-column: auto;
   }
@@ -665,8 +821,15 @@ input[type="search"]:focus {
   .impact-grid,
   .candidate-list,
   .controls-layout,
-  .principles-grid {
+  .principles-grid,
+  .board-pack-grid,
+  .candidate-workspace,
+  .detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .candidate-detail {
+    position: static;
   }
 
   .chart-row {

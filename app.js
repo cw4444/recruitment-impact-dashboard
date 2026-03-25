@@ -122,12 +122,12 @@ const dashboardData = {
 };
 
 const candidates = [
-  { name: "Aisha Khan", role: "Senior Account Executive", function: "Commercial", region: "UK", priority: "Critical", stage: "Final interview", skills: ["Enterprise sales", "MedTech", "Forecasting"], note: "High-value commercial candidate with strong final-stage momentum and excellent stakeholder scores." },
-  { name: "Tom Becker", role: "Platform Engineer", function: "Technology", region: "EMEA", priority: "Critical", stage: "Offer", skills: ["AWS", "Kubernetes", "Terraform"], note: "Strong technical signal; main risk is extended notice period before start." },
-  { name: "Emily Carter", role: "Talent Partner", function: "People", region: "UK", priority: "Growth", stage: "Shortlist", skills: ["Exec hiring", "Employer brand", "Stakeholder management"], note: "Could improve recruiter capability in leadership and specialist hiring." },
-  { name: "Marcus Reed", role: "Revenue Operations Manager", function: "Commercial", region: "North America", priority: "Growth", stage: "Assessment", skills: ["Salesforce", "Planning", "Analytics"], note: "Brings systems discipline and scaling experience for commercial operations." },
-  { name: "Priya Nair", role: "Data Engineer", function: "Technology", region: "UK", priority: "Critical", stage: "Technical interview", skills: ["Python", "dbt", "Snowflake"], note: "Strong fit against strategic skills gaps linked to data platform roadmap." },
-  { name: "Daniel Moore", role: "Operations Lead", function: "Operations", region: "EMEA", priority: "Steady", stage: "Offer", skills: ["Process design", "Vendor management", "Compliance"], note: "Would stabilise operational resilience and improve regional delivery." }
+  { id: "aisha-khan", name: "Aisha Khan", role: "Senior Account Executive", function: "Commercial", region: "UK", priority: "Critical", source: "Agency", stage: "Final interview", recruiter: "Maya Thompson", hiringManager: "Natalie Webb", skills: ["Enterprise sales", "MedTech", "Forecasting"], note: "High-value commercial candidate with strong final-stage momentum and excellent stakeholder scores.", strengths: ["Consistent enterprise quota attainment", "Excellent panel feedback on stakeholder presence", "Strong fit for current UK territory strategy"], risks: ["Competing late-stage process elsewhere"], nextStep: "Final panel debrief on Thursday", expectedStart: "22 April", score: "91/100" },
+  { id: "tom-becker", name: "Tom Becker", role: "Platform Engineer", function: "Technology", region: "EMEA", priority: "Critical", source: "Direct", stage: "Offer", recruiter: "Lewis Grant", hiringManager: "Jonas Keller", skills: ["AWS", "Kubernetes", "Terraform"], note: "Strong technical signal; main risk is extended notice period before start.", strengths: ["High technical depth in cloud infrastructure", "Strong written architecture thinking", "Low onboarding risk on core stack"], risks: ["Extended notice period", "Needs relocation support sign-off"], nextStep: "Offer follow-up and relocation check", expectedStart: "19 May", score: "88/100" },
+  { id: "emily-carter", name: "Emily Carter", role: "Talent Partner", function: "People", region: "UK", priority: "Growth", source: "Internal", stage: "Shortlist", recruiter: "Holly Evans", hiringManager: "Emma Hughes", skills: ["Exec hiring", "Employer brand", "Stakeholder management"], note: "Could improve recruiter capability in leadership and specialist hiring.", strengths: ["Knows the business and leaders already", "Strong employer brand track record"], risks: ["Would create backfill need in current team"], nextStep: "Hiring manager calibration review", expectedStart: "5 May", score: "79/100" },
+  { id: "marcus-reed", name: "Marcus Reed", role: "Revenue Operations Manager", function: "Commercial", region: "North America", priority: "Growth", source: "Direct", stage: "Assessment", recruiter: "Maya Thompson", hiringManager: "Chris Monroe", skills: ["Salesforce", "Planning", "Analytics"], note: "Brings systems discipline and scaling experience for commercial operations.", strengths: ["Strong RevOps systems thinking", "Good fit for scaling motions"], risks: ["Needs deeper stakeholder readout with sales leadership"], nextStep: "Panel assessment scorecards due Friday", expectedStart: "12 May", score: "76/100" },
+  { id: "priya-nair", name: "Priya Nair", role: "Data Engineer", function: "Technology", region: "UK", priority: "Critical", source: "Agency", stage: "Technical interview", recruiter: "Lewis Grant", hiringManager: "Priya Solanki", skills: ["Python", "dbt", "Snowflake"], note: "Strong fit against strategic skills gaps linked to data platform roadmap.", strengths: ["Very strong data stack relevance", "Addresses immediate roadmap gap"], risks: ["Needs sharper assessment on stakeholder communication"], nextStep: "Technical panel next Tuesday", expectedStart: "28 April", score: "84/100" },
+  { id: "daniel-moore", name: "Daniel Moore", role: "Operations Lead", function: "Operations", region: "EMEA", priority: "Steady", source: "Direct", stage: "Offer", recruiter: "Sophie Lane", hiringManager: "Lena Fischer", skills: ["Process design", "Vendor management", "Compliance"], note: "Would stabilise operational resilience and improve regional delivery.", strengths: ["Strong operational control mindset", "Good regional vendor experience"], risks: ["Approval delays may affect candidate confidence"], nextStep: "Final approval with finance partner", expectedStart: "30 April", score: "81/100" }
 ];
 
 const vacancies = [
@@ -143,7 +143,10 @@ const state = {
   function: "all",
   region: "all",
   priority: "all",
-  search: ""
+  source: "all",
+  search: "",
+  selectedCandidateId: "aisha-khan",
+  boardPackMode: false
 };
 
 function getActiveData() {
@@ -235,15 +238,19 @@ function getFilteredCandidates() {
     const matchesFunction = state.function === "all" || candidate.function === state.function;
     const matchesRegion = state.region === "all" || candidate.region === state.region;
     const matchesPriority = state.priority === "all" || candidate.priority === state.priority;
+    const matchesSource = state.source === "all" || candidate.source === state.source;
     const matchesSearch = !query || [
       candidate.name,
       candidate.role,
       candidate.stage,
       candidate.note,
+      candidate.source,
+      candidate.recruiter,
+      candidate.hiringManager,
       ...candidate.skills
     ].some((value) => value.toLowerCase().includes(query));
 
-    return matchesFunction && matchesRegion && matchesPriority && matchesSearch;
+    return matchesFunction && matchesRegion && matchesPriority && matchesSource && matchesSearch;
   });
 }
 
@@ -261,7 +268,7 @@ function renderCandidates() {
   }
 
   container.innerHTML = results.map((candidate) => `
-    <article class="candidate-tile">
+    <article class="candidate-tile ${candidate.id === state.selectedCandidateId ? "is-selected" : ""}" data-candidate-id="${candidate.id}">
       <div class="candidate-top">
         <div>
           <p class="candidate-name">${candidate.name}</p>
@@ -269,13 +276,84 @@ function renderCandidates() {
         </div>
         <span class="pill ${candidate.priority === "Critical" ? "high" : candidate.priority === "Growth" ? "medium" : "good"}">${candidate.stage}</span>
       </div>
-      <p class="candidate-meta">${candidate.function} • ${candidate.region} • ${candidate.priority} priority</p>
+      <p class="candidate-meta">${candidate.function} • ${candidate.region} • ${candidate.priority} priority • ${candidate.source}</p>
       <div class="candidate-tags">
         ${candidate.skills.map((skill) => `<span class="tag">${skill}</span>`).join("")}
       </div>
       <p class="candidate-copy">${candidate.note}</p>
     </article>
   `).join("");
+
+  container.querySelectorAll("[data-candidate-id]").forEach((card) => {
+    card.addEventListener("click", () => {
+      state.selectedCandidateId = card.getAttribute("data-candidate-id");
+      renderDashboard();
+    });
+  });
+}
+
+function renderCandidateDetail() {
+  const container = document.getElementById("candidate-detail");
+  const visibleCandidates = getFilteredCandidates();
+  const selectedCandidate = visibleCandidates.find((candidate) => candidate.id === state.selectedCandidateId) || visibleCandidates[0];
+
+  if (!selectedCandidate) {
+    container.innerHTML = `
+      <div class="empty-state">No candidate selected. Adjust the filters to surface a slate.</div>
+    `;
+    return;
+  }
+
+  state.selectedCandidateId = selectedCandidate.id;
+
+  container.innerHTML = `
+    <div class="detail-top">
+      <div>
+        <p class="detail-name">${selectedCandidate.name}</p>
+        <p class="detail-role">${selectedCandidate.role}</p>
+      </div>
+      <span class="pill ${selectedCandidate.priority === "Critical" ? "high" : selectedCandidate.priority === "Growth" ? "medium" : "good"}">${selectedCandidate.stage}</span>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-stat">
+        <span>Source</span>
+        <strong>${selectedCandidate.source}</strong>
+      </div>
+      <div class="detail-stat">
+        <span>Profile score</span>
+        <strong>${selectedCandidate.score}</strong>
+      </div>
+      <div class="detail-stat">
+        <span>Recruiter</span>
+        <strong>${selectedCandidate.recruiter}</strong>
+      </div>
+      <div class="detail-stat">
+        <span>Expected start</span>
+        <strong>${selectedCandidate.expectedStart}</strong>
+      </div>
+    </div>
+    <div class="detail-section">
+      <p class="detail-heading">Context</p>
+      <p class="detail-meta">${selectedCandidate.function} • ${selectedCandidate.region} • Hiring manager: ${selectedCandidate.hiringManager}</p>
+      <p class="detail-copy">${selectedCandidate.note}</p>
+    </div>
+    <div class="detail-section">
+      <p class="detail-heading">Strengths</p>
+      <ul class="detail-list">
+        ${selectedCandidate.strengths.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </div>
+    <div class="detail-section">
+      <p class="detail-heading">Risks</p>
+      <ul class="detail-list">
+        ${selectedCandidate.risks.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </div>
+    <div class="detail-section">
+      <p class="detail-heading">Next action</p>
+      <p class="detail-copy">${selectedCandidate.nextStep}</p>
+    </div>
+  `;
 }
 
 function renderVacancies() {
@@ -327,9 +405,40 @@ function renderFilterSummary(summary) {
   const functionLabel = state.function === "all" ? "All functions" : state.function;
   const regionLabel = state.region === "all" ? "All regions" : state.region;
   const priorityLabel = state.priority === "all" ? "All priorities" : state.priority;
+  const sourceLabel = state.source === "all" ? "All sources" : state.source;
   const resultCount = getFilteredCandidates().length;
 
-  container.textContent = `${summary} Current lens: ${functionLabel}, ${regionLabel}, ${priorityLabel}. ${resultCount} candidate${resultCount === 1 ? "" : "s"} shown.`;
+  container.textContent = `${summary} Current lens: ${functionLabel}, ${regionLabel}, ${priorityLabel}, ${sourceLabel}. ${resultCount} candidate${resultCount === 1 ? "" : "s"} shown.`;
+}
+
+function renderBoardPack() {
+  const visibleCandidates = getFilteredCandidates();
+  const criticalCount = visibleCandidates.filter((candidate) => candidate.priority === "Critical").length;
+  const agencyCount = visibleCandidates.filter((candidate) => candidate.source === "Agency").length;
+  const headline = document.getElementById("board-headline");
+  const decisions = document.getElementById("board-decisions");
+  const watchouts = document.getElementById("board-watchouts");
+
+  headline.textContent = `Hiring performance remains resilient with ${visibleCandidates.length} visible candidate profiles in scope. ${criticalCount} of these are critical hires, while ${agencyCount} currently depend on agency supply.`;
+
+  decisions.innerHTML = [
+    "Confirm whether critical engineering roles can accept extended notice periods without delivery slippage.",
+    "Decide if additional direct sourcing investment should reduce agency dependence in specialist hiring.",
+    "Review approval turnaround on at-risk vacancies before the next governance meeting."
+  ].map((item) => `<li>${item}</li>`).join("");
+
+  watchouts.innerHTML = [
+    "Time to productivity remains the weakest strategic metric, especially in technology.",
+    "A small number of approval delays are creating candidate confidence risk late in the process.",
+    "Internal mobility is improving, but still underused in growth and specialist pipelines."
+  ].map((item) => `<li>${item}</li>`).join("");
+}
+
+function syncBoardPackMode() {
+  document.body.classList.toggle("board-pack-mode", state.boardPackMode);
+  const button = document.getElementById("board-pack-toggle");
+  button.setAttribute("aria-pressed", String(state.boardPackMode));
+  button.textContent = state.boardPackMode ? "Disable Board Pack" : "Enable Board Pack";
 }
 
 function renderDashboard() {
@@ -340,8 +449,11 @@ function renderDashboard() {
   renderFunnel(activeData.funnelStages);
   renderImpactMetrics(activeData.impactMetrics);
   renderCandidates();
+  renderCandidateDetail();
   renderVacancies();
   renderFilterSummary(activeData.summary);
+  renderBoardPack();
+  syncBoardPackMode();
 }
 
 function bindControls() {
@@ -360,8 +472,18 @@ function bindControls() {
     renderDashboard();
   });
 
+  document.getElementById("source-filter").addEventListener("change", (event) => {
+    state.source = event.target.value;
+    renderDashboard();
+  });
+
   document.getElementById("candidate-search").addEventListener("input", (event) => {
     state.search = event.target.value;
+    renderDashboard();
+  });
+
+  document.getElementById("board-pack-toggle").addEventListener("click", () => {
+    state.boardPackMode = !state.boardPackMode;
     renderDashboard();
   });
 }

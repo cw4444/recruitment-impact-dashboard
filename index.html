@@ -23,7 +23,7 @@
           and strategic role success.
         </p>
         <div class="hero-actions">
-          <button class="primary-action" type="button">Export Board Pack</button>
+          <button class="primary-action" id="board-pack-toggle" type="button" aria-pressed="false">Enable Board Pack</button>
           <button class="secondary-action" type="button">Share Hiring Review</button>
         </div>
       </div>
@@ -78,12 +78,45 @@
               <option value="Steady">Steady</option>
             </select>
           </div>
+          <div class="filter-group">
+            <label class="control-label" for="source-filter">Candidate source</label>
+            <select id="source-filter">
+              <option value="all">All sources</option>
+              <option value="Agency">Agency</option>
+              <option value="Internal">Internal</option>
+              <option value="Direct">Direct</option>
+            </select>
+          </div>
           <div class="filter-group search-group">
             <label class="control-label" for="candidate-search">Candidate search</label>
             <input id="candidate-search" type="search" placeholder="Search by candidate, role, skill or stage">
           </div>
         </div>
         <div class="filter-summary" id="filter-summary"></div>
+      </section>
+
+      <section class="card board-pack-card" id="board-pack-summary">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Board Pack Mode</p>
+            <h2>Leadership summary and watchouts</h2>
+          </div>
+          <p class="section-note">A cleaner export-style layer for leadership conversations and pack screenshots.</p>
+        </div>
+        <div class="board-pack-grid">
+          <article class="board-note">
+            <h3>Headline</h3>
+            <p id="board-headline"></p>
+          </article>
+          <article class="board-note">
+            <h3>Decisions needed</h3>
+            <ul id="board-decisions" class="board-list"></ul>
+          </article>
+          <article class="board-note">
+            <h3>Key watchouts</h3>
+            <ul id="board-watchouts" class="board-list"></ul>
+          </article>
+        </div>
       </section>
 
       <section class="card spotlight">
@@ -108,7 +141,7 @@
         <div class="trend-chart" id="trend-chart" aria-label="Hiring velocity trend chart"></div>
       </section>
 
-      <section class="card">
+      <section class="card strategic-card">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Strategic Metrics</p>
@@ -119,7 +152,7 @@
         <div class="priority-list" id="strategic-metrics"></div>
       </section>
 
-      <section class="card">
+      <section class="card funnel-card">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Funnel Health</p>
@@ -130,7 +163,7 @@
         <div class="funnel-list" id="funnel-stages"></div>
       </section>
 
-      <section class="card">
+      <section class="card impact-card">
         <div class="section-heading">
           <div>
             <p class="eyebrow">Risk & Value</p>
@@ -145,11 +178,14 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">Candidate View</p>
-            <h2>Searchable slate and pipeline watchlist</h2>
+            <h2>Searchable slate and recruiter drill-down</h2>
           </div>
           <p class="section-note">This gives recruiters and hiring managers a practical way into the data.</p>
         </div>
-        <div class="candidate-list" id="candidate-list"></div>
+        <div class="candidate-workspace">
+          <div class="candidate-list" id="candidate-list"></div>
+          <aside class="candidate-detail" id="candidate-detail"></aside>
+        </div>
       </section>
 
       <section class="card vacancies-card">

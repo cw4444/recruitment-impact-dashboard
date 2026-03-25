@@ -38,6 +38,11 @@ button {
   cursor: pointer;
 }
 
+@page {
+  size: A4 portrait;
+  margin: 14mm;
+}
+
 .page-shell {
   width: min(1380px, calc(100% - 32px));
   margin: 0 auto;
@@ -647,6 +652,12 @@ input[type="search"]:focus {
   line-height: 1.7;
 }
 
+.print-footnote {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .board-pack-mode .board-pack-card {
   display: block;
 }
@@ -662,6 +673,19 @@ input[type="search"]:focus {
 .board-pack-mode .hero-panel,
 .board-pack-mode .card {
   box-shadow: 0 10px 30px rgba(39, 43, 54, 0.08);
+}
+
+.board-pack-mode .hero {
+  margin-bottom: 18px;
+}
+
+.board-pack-mode .hero-copy h1 {
+  max-width: 13ch;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+}
+
+.board-pack-mode .hero-text {
+  max-width: 58ch;
 }
 
 .source-points {
@@ -839,5 +863,144 @@ input[type="search"]:focus {
   .chart-value {
     grid-column: 2;
     justify-self: end;
+  }
+}
+
+@media print {
+  body {
+    background: #ffffff;
+    min-height: auto;
+  }
+
+  .page-shell {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hero-copy,
+  .hero-panel,
+  .card,
+  .board-note,
+  .metric-tile,
+  .impact-tile,
+  .priority-item,
+  .funnel-item {
+    background: #ffffff;
+    border: 1px solid #d9d4c9;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .hero-copy::after {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1.45fr 0.9fr;
+    gap: 12px;
+    margin-bottom: 12px;
+    break-inside: avoid;
+  }
+
+  .hero-copy,
+  .hero-panel,
+  .card {
+    border-radius: 14px;
+  }
+
+  .hero-copy,
+  .hero-panel,
+  .card,
+  .board-note {
+    padding: 14px;
+  }
+
+  .hero-actions,
+  .controls-card,
+  .candidates-card,
+  .vacancies-card,
+  .source-card {
+    display: none !important;
+  }
+
+  .board-pack-card {
+    display: block !important;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .spotlight {
+    grid-column: span 7;
+  }
+
+  .chart-card {
+    grid-column: span 5;
+  }
+
+  .strategic-card,
+  .funnel-card,
+  .impact-card {
+    grid-column: span 4;
+  }
+
+  .board-pack-card {
+    grid-column: span 12;
+    break-inside: avoid;
+  }
+
+  .board-pack-grid,
+  .metric-grid,
+  .impact-grid {
+    gap: 10px;
+  }
+
+  .board-note,
+  .metric-tile,
+  .impact-tile,
+  .priority-item,
+  .funnel-item,
+  .chart-card,
+  .spotlight,
+  .strategic-card,
+  .funnel-card,
+  .impact-card {
+    break-inside: avoid;
+  }
+
+  h1 {
+    font-size: 31pt;
+  }
+
+  h2 {
+    font-size: 21pt;
+  }
+
+  .hero-text,
+  .hero-note,
+  .section-note,
+  .metric-detail,
+  .impact-detail,
+  .priority-copy,
+  .funnel-copy,
+  .print-footnote,
+  .board-note p,
+  .board-list {
+    color: #425062;
+  }
+
+  .score-value {
+    font-size: 42pt;
+  }
+
+  .chart-track {
+    background: #e9e5dc;
+  }
+
+  .print-footnote {
+    margin-top: 12px;
   }
 }

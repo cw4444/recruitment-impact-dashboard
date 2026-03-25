@@ -486,6 +486,15 @@ function bindControls() {
     state.boardPackMode = !state.boardPackMode;
     renderDashboard();
   });
+
+  document.getElementById("print-board-pack").addEventListener("click", () => {
+    const previousMode = state.boardPackMode;
+    state.boardPackMode = true;
+    renderDashboard();
+    window.print();
+    state.boardPackMode = previousMode;
+    renderDashboard();
+  });
 }
 
 bindControls();

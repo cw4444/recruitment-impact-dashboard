@@ -2,7 +2,12 @@
 
 A polished single-page recruitment dashboard concept built from a strategic talent metrics framework.
 
+Live demo:
+[recruitment-impact-dashboard.vercel.app](https://recruitment-impact-dashboard.vercel.app)
+
 ![Recruitment Impact Dashboard preview](assets/social-preview.svg)
+
+![Recruitment dashboard screenshot](./recruitment.png)
 
 ## What it includes
 
@@ -22,6 +27,10 @@ A polished single-page recruitment dashboard concept built from a strategic tale
 ## Running locally
 
 Open `index.html` in a browser.
+
+## Hosted demo
+
+The dashboard is also deployed as a static Vercel site, which makes it easier to open quickly in interviews, share in applications and use as a clean portfolio link.
 
 ## Notes
 

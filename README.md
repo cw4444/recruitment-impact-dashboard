@@ -35,9 +35,3 @@ The dashboard is also deployed as a static Vercel site, which makes it easier to
 ## Notes
 
 The dashboard currently uses illustrative sample data so the interface can be reviewed and iterated before connecting to live recruitment sources.
-
-## License
-
-This project is proprietary. You may not use, copy, modify, redistribute, deploy, or install it for commercial or client use without prior written permission.
-
-Commercial licenses are available. For business use, professional installation, or deployment enquiries, contact me

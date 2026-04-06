@@ -2,9 +2,6 @@
 
 A polished single-page recruitment dashboard concept built from a strategic talent metrics framework.
 
-Live demo:
-[recruitment-impact-dashboard.vercel.app](https://recruitment-impact-dashboard.vercel.app)
-
 ![Recruitment Impact Dashboard preview](assets/social-preview.svg)
 
 ![Recruitment dashboard screenshot](./recruitment.png)

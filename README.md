@@ -31,4 +31,4 @@ The dashboard is also deployed as a static Vercel site, which makes it easier to
 
 ## Notes
 
-The dashboard currently uses illustrative sample data so the interface can be reviewed and iterated before connecting to live recruitment sources.
+The dashboard currently uses illustrative sample data so the interface can be reviewed and iterated before connecting to live recruitment sources using MCP frameworks
